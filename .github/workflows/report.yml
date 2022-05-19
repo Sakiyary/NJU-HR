@@ -1,0 +1,35 @@
+name: Health Report Action
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - playground
+
+  schedule:
+    - cron: '46 1 * * *'
+    - cron: '23 5 * * *'
+    - cron: '11 10 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run Script
+        env:
+          NJU_USERNAME: ${{ secrets.username }}
+          CURR_LOCATION: ${{ secrets.location }}
+          COOKIE_CASTGC: ${{ secrets.cookie }}
+          USER_AGENT: ${{ secrets.useragent }}
+        run: |
+          python nju_hr.py
