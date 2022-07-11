@@ -18,16 +18,6 @@ HEADERS = {
     "User-Agent": os.getenv('USER_AGENT')
 }
 
-def get_zjhs_time(method='EVERY_FIVE_DAYS'):
-    today = datetime.datetime.now(timezone('Asia/Shanghai'))
-    start_day = datetime.datetime.strptime("2022-05-%02d" % (4 + int(os.getenv('NJU_USERNAME')[-1]) % 5), "%Y-%m-%d").replace(tzinfo=timezone('Asia/Shanghai'))
-    zjhs_time = today
-    if method == 'EVERY_FIVE_DAYS':
-        zjhs_time += datetime.timedelta(days=-((today - start_day).days % 5))
-    elif method == 'YESTERDAY':
-        zjhs_time += datetime.timedelta(-1)
-    return zjhs_time.strftime("%Y-%m-%d %H")
-
 def apply():
     for _ in range(3):
         try:
@@ -35,10 +25,8 @@ def apply():
             jar = requests.cookies.RequestsCookieJar()
             jar.set("CASTGC", os.getenv('COOKIE_CASTGC'))
             sess.cookies.update(jar)
-
             r = sess.get('http://ehallapp.nju.edu.cn/xgfw/sys/mrjkdkappnju/index.do', headers=HEADERS)
             logging.info(sess.cookies)
-
             r = sess.get('http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do', headers=HEADERS)
             logging.info(r.text)
 
@@ -46,14 +34,14 @@ def apply():
             has_applied = dk_info['TBZT'] == "1"
 
             if has_applied:
-                return 'ok'
+                return 'has checked'
 
             wid = dk_info['WID']
             param = {
                 'WID': wid,
                 'IS_TWZC': 1,  # 是否体温正常
                 'CURR_LOCATION': os.getenv('CURR_LOCATION'),  # 位置
-                'ZJHSJCSJ': get_zjhs_time(),  # 最近核酸检测时间
+                'ZJHSJCSJ': (datetime.datetime.now(timezone('Asia/Shanghai'))+datetime.timedelta(-1)).strftime("%Y-%m-%d %H"),  # 最近核酸检测时间
                 'JRSKMYS': 1,  # 今日苏康码颜色
                 'IS_HAS_JKQK': 1,  # 健康情况
                 'JZRJRSKMYS': 1,  # 居住人今日苏康码颜色
@@ -61,13 +49,11 @@ def apply():
             }
 
             r = sess.get("http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/saveApplyInfos.do", params=param, headers=HEADERS)
-            
             logging.info(r.text)
             assert r.json()['code'] == "0"
         except Exception as e:
             logging.error(e)
-    
-    return 'fail'
+    return 'fail to check'
 
 if __name__ =='__main__':
     logging.info(apply())
