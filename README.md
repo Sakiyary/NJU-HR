@@ -19,7 +19,7 @@ NJU-HR 可以帮您自动进行每日健康打卡.
 2. 进入 `Settings` 选项, 点击 `Secret`, 并选择 `New Repository Secret`. 依次添加以下变量:
    - `USERNAME`: 学号.
    - `LOCATION`: 你希望打卡的地理位置。比如南京大学仙林校区可以填 `中国江苏省南京市栖霞区九乡河东路`.
-   - `COOKIE`: ~~使用电脑端 Chrome/Edge 打开[该网址](https://authserver.nju.edu.cn/authserver/login?service=https%3A%2F%2Fauthserver.nju.edu.cn%2Fauthserver%2Fmobile%2Fcallback%3FappId%3D301317066&login_type=mobileLogin), 成功登录后重新启动该网页, 按 `F12` 进入开发者模式, 选择 `网络`, 刷新页面, 点击抓取到的 `default.html`, 查看标头中 `Cookie:` 部分, 将 `CASTGC=` 之后的代码复制进该变量.~~ 上述方法仅可生效一天，若想长期生效，需用 `安卓手机`+`抓包软件` (如`Release`中的 `HttpCanary` 软件) 抓取 `南京大学APP` - `每日健康打卡` 的登录界面, 获得长效 `COOKIE`. 样例为 "TGT-xxxx-xxxx-xxxx-cas". 注意: 该 `COOKIE` 会在 `重新登录/清除缓存` 后失效, 建议用一废旧手机抓包获取后便不再动它. (另一手机可正常登录登出, 不会造成/受到影响)
+   - `COOKIE`: ~~使用电脑端 Chrome/Edge 打开[该网址](https://authserver.nju.edu.cn/authserver/login?service=https%3A%2F%2Fauthserver.nju.edu.cn%2Fauthserver%2Fmobile%2Fcallback%3FappId%3D301317066&login_type=mobileLogin), 成功登录后重新启动该网页, 按 `F12` 进入开发者模式, 选择 `网络`, 刷新页面, 点击抓取到的 `default.html`, 查看标头中 `Cookie:` 部分, 将 `CASTGC=` 之后的代码复制进该变量.~~ 上述方法仅可生效一天，若想长期生效，需用 `安卓手机`+`抓包软件` (如`Release`中的 `HttpCanary` 软件) 抓取 `南京大学APP` - `每日健康打卡` 的登录界面, 获得长效 `COOKIE`. 样例为 "TGT-xxxx-xxxx-xxxx-cas". 注意: 该 `COOKIE` 会在 `重新登录/清除缓存` 后失效, 建议使用安卓系统的`清除应用数据`重置南京大学APP后正常使用.
    - `USERAGENT`: 使用手机端 Chrome/Edge 浏览器, 输入网址 about:version (注意为半角冒号), 查看`用户代理`/`User-Agent:` 部分, 在末尾加上 "cpdaily/9.0.15", 并复制进该变量. 样例为 "Mozilla/5.0 (Linux; Android xx; xxxx) AppleWebkit/xxxx(xxxx) Chrome/xxxx Mobile Safari/xxxx cpdaily/9.0.15".
 3. 回到 `Action` 选项卡, 重新运行 Action，或者静待自动打卡.
 
@@ -30,5 +30,5 @@ NJU-HR 可以帮您自动进行每日健康打卡.
 3. 设置`您今日苏康码显示颜色`为`绿色`.
 4. 设置`您的共同居住人今日苏康码显示颜色`为`绿色`.
 5. 设置`最近14天是否离宁`为`否`.
-6. 设置`您的最近一次核酸检测时间`默认为常态化核酸检测时间.
+6. 设置`您的最近一次核酸检测时间`默认为`昨天`.
 7. 设置`填报地址`为 `LOCATION` 项.
