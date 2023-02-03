@@ -40,12 +40,13 @@ def apply():
             param = {
                 'WID': wid,
                 'IS_TWZC': 1,  # 是否体温正常
-                'CURR_LOCATION': os.getenv('CURR_LOCATION'),  # 位置
-                'ZJHSJCSJ': (datetime.datetime.now(timezone('Asia/Shanghai'))+datetime.timedelta(-1)).strftime("%Y-%m-%d %H"),  # 最近核酸检测时间
-                'JRSKMYS': 1,  # 今日苏康码颜色
                 'IS_HAS_JKQK': 1,  # 健康情况
-                'JZRJRSKMYS': 1,  # 居住人今日苏康码颜色
-                'SFZJLN': 0,  # 是否最近离宁
+                "DQDXGZK": 1, # 新冠状况
+                'CURR_LOCATION': os.getenv('CURR_LOCATION'),  # 位置
+                'ZJHSJCSJ': "2023-01-26 10",  # 最近核酸检测时间（已失效）
+                'JRSKMYS': 1,  # 今日苏康码颜色（已失效）
+                'JZRJRSKMYS': 1,  # 居住人今日苏康码颜色（已失效）
+                'SFZJLN': 0,  # 是否最近离宁（已失效）
             }
 
             r = sess.get("http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/saveApplyInfos.do", params=param, headers=HEADERS)
