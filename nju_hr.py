@@ -41,7 +41,7 @@ def apply():
                 'WID': wid,
                 'IS_TWZC': 1,  # 是否体温正常
                 'IS_HAS_JKQK': 1,  # 健康情况
-                "DQDXGZK": 1, # 新冠状况
+                "DQDXGZK": 1, # 当前的新冠状况
                 'CURR_LOCATION': os.getenv('CURR_LOCATION'),  # 位置
                 'ZJHSJCSJ': "2023-01-26 10",  # 最近核酸检测时间（已失效）
                 'JRSKMYS': 1,  # 今日苏康码颜色（已失效）
